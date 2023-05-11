@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Constantes';
 
-class ListProduto extends React.Component{
+class ListEntregador extends React.Component{
 
     state = {
 
-        listaProdutos: []
+        listaEntregadores: []
     }
+    
 
     componentDidMount = () => {
       
@@ -19,14 +20,28 @@ class ListProduto extends React.Component{
 
     carregarLista = () => {
 
-        axios.get(ENDERECO_SERVIDOR + "/api/produto")
+        axios.get(ENDERECO_SERVIDOR + "/api/entregador")
         .then((response) => {
           
             this.setState({
-                listaProdutos: response.data
+                listaEntregadores: response.data
             })
         })
 
+    };
+
+    formatarData = (dataParam) => {
+
+        if (dataParam == null || dataParam == '') {
+            return ''
+        }
+        
+        let dia = dataParam.substr(8,2);
+        let mes = dataParam.substr(5,2);
+        let ano = dataParam.substr(0,4);
+        let dataFormatada = dia + '/' + mes + '/' + ano;
+
+        return dataFormatada
     };
 
     render(){
@@ -37,7 +52,7 @@ class ListProduto extends React.Component{
 
                     <Container textAlign='justified' >
 
-                        <h2> Produto </h2>
+                        <h2> Entregador </h2>
 
                         <Divider />
 
@@ -52,7 +67,7 @@ class ListProduto extends React.Component{
                                 floated='right'
                             >
                                 <Icon name='clipboard outline' />
-                                <Link to={'/form-produto'}>Novo</Link>
+                                <Link to={'/form-entregador'}>Novo</Link>
                             </Button>
 
                             <br/><br/><br/>
@@ -61,27 +76,25 @@ class ListProduto extends React.Component{
 
                                 <Table.Header>
                                     <Table.Row>
-                                        <Table.HeaderCell>Código</Table.HeaderCell>
-                                        <Table.HeaderCell>Título</Table.HeaderCell>
-                                        <Table.HeaderCell>Descrição</Table.HeaderCell>
-                                        <Table.HeaderCell>Valor Unitário</Table.HeaderCell>
-                                        <Table.HeaderCell>Tempo Mínimo de Entrega</Table.HeaderCell>
-                                        <Table.HeaderCell>Tempo Máximo de Entrega</Table.HeaderCell>
+                                        <Table.HeaderCell>Nome</Table.HeaderCell>
+                                        <Table.HeaderCell>CPF</Table.HeaderCell>
+                                        <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
+                                        <Table.HeaderCell>Fone Celular</Table.HeaderCell>
+                                        <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
                                         <Table.HeaderCell textAlign='center' width={2}>Ações</Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Header>
                           
                                 <Table.Body>
 
-                                    { this.state.listaProdutos.map(p => (
+                                    { this.state.listaEntregadores.map(entregador => (
 
                                         <Table.Row>
-                                            <Table.Cell>{p.codigo}</Table.Cell>
-                                            <Table.Cell>{p.titulo}</Table.Cell>
-                                            <Table.Cell>{p.descricao}</Table.Cell>
-                                            <Table.Cell>{p.valorUnitario}</Table.Cell>
-                                            <Table.Cell>{p.tempoEntregaMinimo}</Table.Cell>
-                                            <Table.Cell>{p.tempoEntregaMaximo}</Table.Cell>
+                                            <Table.Cell>{entregador.nome}</Table.Cell>
+                                            <Table.Cell>{entregador.cpf}</Table.Cell>
+                                            <Table.Cell>{this.formatarData(entregador.dataNascimento)}</Table.Cell>
+                                            <Table.Cell>{entregador.foneCelular}</Table.Cell>
+                                            <Table.Cell>{entregador.foneFixo}</Table.Cell>
                                             <Table.Cell textAlign='center'>
                                               
                                                <Button
@@ -112,4 +125,4 @@ class ListProduto extends React.Component{
    }
 }
 
-export default ListProduto;
+export default ListEntregador;
