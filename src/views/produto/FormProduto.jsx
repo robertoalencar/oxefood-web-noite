@@ -15,6 +15,9 @@ export default function FormProduto () {
 	const [valorUnitario, setValorUnitario] = useState();
 	const [tempoEntregaMinimo, setTempoEntregaMinimo] = useState();
 	const [tempoEntregaMaximo, setTempoEntregaMaximo] = useState();
+	const [listaCategoria, setListaCategoria] = useState([]);
+   	const [idCategoria, setIdCategoria] = useState();
+
 
 	useEffect(() => {
 
@@ -32,12 +35,25 @@ export default function FormProduto () {
 				setTempoEntregaMaximo(response.data.tempoEntregaMaximo)
 			})
 		}
+
+		axios.get(ENDERECO_SERVIDOR + "/api/categoriaproduto")
+		.then((response) => {
+
+			const dropDownCategorias = response.data.map(c => ({ 
+				text: c.descricao, 
+				value: c.id 
+			}));
+			
+			setListaCategoria(dropDownCategorias);
+		})
+	   
 	}, [state])
 
 	function salvar() {
 
 		let produtoRequest = {
 
+			idCategoria: idCategoria,
 			codigo: codigo,
 			titulo: titulo,
 			descricao: descricao,
@@ -104,6 +120,19 @@ export default function FormProduto () {
 									onChange={e => setCodigo(e.target.value)}
 								/>
 							</Form.Group>
+
+							<Form.Select
+								required
+								fluid
+								tabIndex='3'
+								placeholder='Selecione'
+								label='Categoria'
+								options={listaCategoria}
+								value={idCategoria}
+								onChange={(e,{value}) => {
+									setIdCategoria(value)
+								}}
+							/>
 
 							<Form.TextArea
 								label='Descrição'

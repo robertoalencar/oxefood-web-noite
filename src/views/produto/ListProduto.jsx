@@ -102,6 +102,7 @@ class ListProduto extends React.Component{
                                 <Table.Header>
                                     <Table.Row>
                                         <Table.HeaderCell>Código</Table.HeaderCell>
+                                        <Table.HeaderCell>Categoria</Table.HeaderCell>
                                         <Table.HeaderCell>Título</Table.HeaderCell>
                                         <Table.HeaderCell>Descrição</Table.HeaderCell>
                                         <Table.HeaderCell>Valor Unitário</Table.HeaderCell>
@@ -117,6 +118,7 @@ class ListProduto extends React.Component{
 
                                         <Table.Row key={p.id}>
                                             <Table.Cell>{p.codigo}</Table.Cell>
+                                            <Table.Cell>{p.categoria.descricao}</Table.Cell>
                                             <Table.Cell>{p.titulo}</Table.Cell>
                                             <Table.Cell>{p.descricao}</Table.Cell>
                                             <Table.Cell>{p.valorUnitario}</Table.Cell>
