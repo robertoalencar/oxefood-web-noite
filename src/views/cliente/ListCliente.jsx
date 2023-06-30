@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
 import { ENDERECO_SERVIDOR } from '../../util/Constantes';
+import { notifySuccess } from '../../util/Util';
 
 class ListCliente extends React.Component{
 
@@ -37,9 +38,9 @@ class ListCliente extends React.Component{
             return ''
         }
         
-        let dia = dataParam.substr(8,2);
-        let mes = dataParam.substr(5,2);
-        let ano = dataParam.substr(0,4);
+        let dia = dataParam[2];
+        let mes = dataParam[1];
+        let ano = dataParam[0];
         let dataFormatada = dia + '/' + mes + '/' + ano;
 
         return dataFormatada
@@ -67,7 +68,7 @@ class ListCliente extends React.Component{
         .then((response) => {
    
             this.setState({ openModal: false })
-            console.log('Cliente removido com sucesso.')
+            notifySuccess('Cliente removido com sucesso.')
    
             axios.get(ENDERECO_SERVIDOR + "/api/cliente")
             .then((response) => {
