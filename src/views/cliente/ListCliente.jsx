@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Header, Icon, Modal, Table } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 import { ENDERECO_SERVIDOR } from '../../util/Constantes';
 import { notifySuccess } from '../../util/Util';
 
@@ -87,6 +88,8 @@ class ListCliente extends React.Component{
     render(){
         return(
             <div>
+
+                <MenuSistema />
 
                 <div style={{marginTop: '3%'}}>
 
